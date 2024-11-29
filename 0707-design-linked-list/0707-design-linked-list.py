@@ -1,60 +1,55 @@
-class ListNode:
-    def __init__(self,x): 
-        self.val = x
-        self.next = None
+class Node:
+    def __init__(self, val = 0, next = None, prev = None):
+        self.val = val
+        self.next = next
+        self.prev = prev
+
 
 class MyLinkedList:
     def __init__(self):
-        self.head = ListNode(-1) # dummy node
         self.size = 0
-
+        self.head, self.tail = Node(), Node()
+        self.head.next = self.tail
+        self.tail.prev = self.head
+        
     def get(self, index: int) -> int:
-        if index < 0 or index >= self.size:
-            print(f"get({index}): index is invalid")
+        if index >= self.size: # invalid index
             return -1
-
-        curr = self.head
+            
+        cur = self.head
         for _ in range(index+1):
-            curr = curr.next
-        return curr.val
+            cur = cur.next
+        return cur.val
 
     def addAtHead(self, val: int) -> None:
-        self.addAtIndex(0,val)
-        
+        self.addAtIndex(0, val)
+
     def addAtTail(self, val: int) -> None:
-        self.addAtIndex(self.size,val)
+        self.addAtIndex(self.size, val)
 
     def addAtIndex(self, index: int, val: int) -> None:
-        if index > self.size:
+        if index > self.size:  # invalid index
             return
-        if index < 0:
-            index = 0
-        
-        prev_node = self.head
-        for _ in range(index):
-            prev_node = prev_node.next
 
-        node = ListNode(val)
-        node.next = prev_node.next # set node.next = rest of the list
-        prev_node.next = node # set prev.next = new node
+        prev = self.head
+        for _ in range(index):
+            prev = prev.next
+
+        # insert `newNode` between `prev` and `prev.next`
+        newNode = Node(val, prev.next, prev)
+        prev.next.prev = newNode
+        prev.next = newNode
         self.size += 1
 
     def deleteAtIndex(self, index: int) -> None:
-        if index < 0 or index >= self.size:
-            print(f"deleteAtIndex({index}): index is invalid")
+        if index >= self.size:  # invalid index
             return
 
-        prev_node = self.head
+        prev = self.head
         for _ in range(index):
-            prev_node = prev_node.next
+            prev = prev.next
 
-        prev_node.next = prev_node.next.next
+        nxt = prev.next.next
+        prev.next = nxt
+        nxt.prev = prev
         self.size -= 1
-
-# Your MyLinkedList object will be instantiated and called as such:
-# obj = MyLinkedList()
-# param_1 = obj.get(index)
-# obj.addAtHead(val)
-# obj.addAtTail(val)
-# obj.addAtIndex(index,val)
-# obj.deleteAtIndex(index)
