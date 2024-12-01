@@ -27,10 +27,8 @@ class Solution:
             return None
 
         # merge each pair of lists until 1 remains
-        i = 1
-        while i < len(lists):
+        for i in range(1, len(lists)):
             lists[0] = merge2Lists(lists[0],lists[i])
-            i += 1
         return lists[0] # is this only constant space since we're doing it in-place?
 
         
