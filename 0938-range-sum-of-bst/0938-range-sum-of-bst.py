@@ -6,21 +6,19 @@
 #         self.right = right
 class Solution:
     def rangeSumBST(self, root: Optional[TreeNode], low: int, high: int) -> int:
-        if not root:
-            return None
-        
-        q = deque([root])
         range_sum = 0
+        def dfs(root):
+            nonlocal range_sum
+            if not root:
+                return None
 
-        while q:
-            for i in range(len(q)):
-                curr = q.popleft()
+            if low <= root.val <= high:
+                range_sum += root.val
+            
+            if root.left:
+                dfs(root.left)
+            if root.right:
+                dfs(root.right)
 
-                if low <= curr.val <= high:
-                    range_sum += curr.val
-                
-                if curr.left:
-                    q.append(curr.left)
-                if curr.right:
-                    q.append(curr.right)
+        dfs(root)
         return range_sum
