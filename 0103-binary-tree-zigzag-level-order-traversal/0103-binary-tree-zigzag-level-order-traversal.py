@@ -15,19 +15,18 @@ class Solution:
         level = 0
 
         while q:
-            level_nodes = deque()
+            level_nodes = []
             for i in range(len(q)):
                 curr = q.popleft()
                 
-                if level % 2 == 1:
-                    level_nodes.appendleft(curr.val)
-                else:
-                    level_nodes.append(curr.val)
+                level_nodes.append(curr.val)
 
                 if curr.left:
                     q.append(curr.left)
                 if curr.right:
                     q.append(curr.right)
-            res.append(list(level_nodes))
+            if level % 2 == 1:
+                level_nodes = level_nodes[::-1]
+            res.append(level_nodes)
             level += 1
         return res
