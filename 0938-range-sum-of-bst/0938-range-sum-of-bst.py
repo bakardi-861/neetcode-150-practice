@@ -7,6 +7,7 @@
 class Solution:
     def __init__(self):
         self.total = 0
+
     def rangeSumBST(self, root: Optional[TreeNode], low: int, high: int) -> int:
         if not root:
             return 0
@@ -19,4 +20,3 @@ class Solution:
         if root.val < high:
             self.rangeSumBST(root.right, low, high)
         return self.total
-        
