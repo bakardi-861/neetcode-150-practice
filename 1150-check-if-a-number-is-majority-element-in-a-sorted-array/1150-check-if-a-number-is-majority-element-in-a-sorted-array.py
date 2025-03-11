@@ -1,16 +1,18 @@
 class Solution:
     def isMajorityElement(self, nums: List[int], target: int) -> bool:
-        # candidate = None
-        count = 0
-        max_count = 0
+        # bc array is sorted and we are checking if an element is in the array, we can use binary search
+        # binary search to find the lower bound: first instance of target
+        def lower_bound():
+            l,r = 0,len(nums)-1
+            while l < r:
+                mid = (r+l) // 2
+                if nums[mid] >= target:
+                    r = mid
+                else:
+                    l = mid + 1
+            return l
 
-        for i,n in enumerate(nums):
-            if i > 0 and n > nums[i-1]:
-                count = 0
-                
-            count += 1
-            max_count = max(max_count,count)
-
-            if max_count > (len(nums) // 2) and n == target:
-                return True
-        return False
+        # goal_index is the lower_bound() index + len(nums) // 2 to get the instance of target that appears more than len(nums) // 2 times.
+        goal_index = lower_bound() + len(nums) // 2
+        # if the index is within nums and the num at that index is target, then it's the majority element
+        return goal_index < len(nums) and nums[goal_index] == target
