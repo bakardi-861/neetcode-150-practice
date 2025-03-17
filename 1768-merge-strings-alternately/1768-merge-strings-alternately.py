@@ -7,11 +7,12 @@ class Solution:
             merged.append(word1[i])
             merged.append(word2[i])
             i += 1
+        
+        ans = "".join(merged)
 
-        while i < len(word1):
-            merged.append(word1[i])
-            i += 1
-        while i < len(word2):
-            merged.append(word2[i])
-            i += 1
-        return "".join(merged)
+        if i < len(word1):
+            ans += word1[i:len(word1)]
+        elif i < len(word2):
+            ans += word2[i:len(word2)]
+
+        return ans
