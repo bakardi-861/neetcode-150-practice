@@ -1,12 +1,7 @@
 class Solution:
     def groupAnagrams(self, strs: List[str]) -> List[List[str]]:
-        hmap = defaultdict(list)
-
+        # group sorted letter combinations together in a hashmap
+        s_map = defaultdict(list)
         for s in strs:
-            count = [0] * 26
-            for c in s:
-                count[ord(c) - ord("a")] += 1
-            
-            hmap[tuple(count)].append(s)
-            
-        return [l for l in hmap.values()]
+            s_map[tuple(sorted(s))].append(s)
+        return [s_map[s] for s in s_map]
