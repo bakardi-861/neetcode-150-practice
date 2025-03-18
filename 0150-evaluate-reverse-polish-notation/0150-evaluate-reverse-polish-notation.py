@@ -4,7 +4,7 @@ class Solution:
         # round decimals down
         stack = []
         for t in tokens:
-            if stack and t in "+/*-":
+            if t in "+/*-":
                 num2 = stack.pop()
                 num1 = stack.pop()
                 if t == "+":
