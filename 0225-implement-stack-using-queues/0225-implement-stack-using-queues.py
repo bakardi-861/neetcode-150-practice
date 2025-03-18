@@ -7,8 +7,7 @@ class MyStack:
         self.q.appendleft(x)
 
     def pop(self) -> int:
-        pop = self.q.popleft()
-        return pop
+        return self.q.popleft()
 
     def top(self) -> int:
         return self.q[0]
