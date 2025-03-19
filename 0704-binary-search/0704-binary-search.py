@@ -3,12 +3,12 @@ class Solution:
         # return first and last instance of target
         l,r = 0,len(nums)-1
         while l < r:
-            mid = (r+l+1)//2 # need + 1 when finding last occurence to have a right bias
+            mid = (r+l)//2 # need + 1 when finding last occurence to have a right bias
 
-            if nums[mid] <= target: # target is larger than mid, or == mid
-                l = mid
+            if nums[mid] < target: # target is larger than mid, or == mid
+                l = mid + 1
             else: # target is smaller than mid, shrink space
-               r = mid - 1
+               r = mid
         return l if nums[l] == target else -1
         #   0 1 2 3 4 5 
         # [-1,0,3,5,9,12].  target = 9
