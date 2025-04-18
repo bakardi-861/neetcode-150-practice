@@ -17,14 +17,11 @@ class Solution:
         dummy.next = head
         
         slow = fast = dummy.next
-        # prev = None
         
         while fast and fast.next:
-            # prev = slow
             slow = slow.next
             fast = fast.next.next
         
-        # prev.next = None
         slow = reverse(slow)
 
         first = head
