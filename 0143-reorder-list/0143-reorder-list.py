@@ -8,42 +8,21 @@ class Solution:
         if not head or not head.next:
             return
 
-        def reverse(head):
-            prev, curr = None, head
-            while curr:
-                curr.next,prev,curr = prev,curr,curr.next
-            return prev
-
-        dummy = ListNode(0)
-        dummy.next = head
-
-        fast = slow = head
-        prev = dummy
+        # Step 1: Find the middle using slow/fast
+        slow, fast = head, head
         while fast and fast.next:
-            prev = slow
             slow = slow.next
             fast = fast.next.next
-        
-        prev.next = None
-        second_half = reverse(slow)
 
-        first_half = head
-        merged = dummy
-        flag = True
+        # Step 2: Reverse the second half
+        prev, curr = None, slow.next
+        slow.next = None  # Cut the list in half
+        while curr:
+            curr.next, prev, curr = prev, curr, curr.next
 
-        while first_half and second_half:
-            if flag:
-                merged.next = first_half
-                first_half = first_half.next
-                flag = False
-            else:
-                merged.next = second_half
-                second_half = second_half.next
-                flag = True
-            merged = merged.next
-
-        if first_half:
-            merged.next = first_half
-        elif second_half:
-            merged.next = second_half
-        return dummy.next
+        # Step 3: Merge the two halves
+        first, second = head, prev
+        while second:
+            tmp1, tmp2 = first.next, second.next
+            first.next,second.next = second,tmp1
+            first, second = tmp1, tmp2
