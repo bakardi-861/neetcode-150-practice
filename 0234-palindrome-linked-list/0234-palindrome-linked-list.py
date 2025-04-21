@@ -5,30 +5,31 @@
 #         self.next = next
 class Solution:
     def isPalindrome(self, head: Optional[ListNode]) -> bool:
-        # create copy, reverse copy and return reversed_head == head
-        # probably a 2 ptrs solution with fast/slow pointers
+        # split in half, reverse 2nd half and return if first_half = second_half
+        # this way we don't have to copy the entire list and reverse it
         def reverse(head):
-            prev,curr = None, head
+            prev,curr = None,head
             while curr:
                 curr.next,prev,curr = prev,curr,curr.next
             return prev
 
         dummy = ListNode(0)
         dummy.next = head
-        
-        slow = fast = dummy.next
-        
+
+        fast = slow = head
+        prev = dummy
+
         while fast and fast.next:
+            prev = slow
             slow = slow.next
             fast = fast.next.next
         
-        slow = reverse(slow)
+        prev.next = None
+        second_half = reverse(slow)
 
-        first = head
-        second = slow
-        while second:
-            if first.val != second.val:
+        while head and second_half:
+            if head.val != second_half.val:
                 return False
-            first = first.next
-            second = second.next
+            head = head.next
+            second_half = second_half.next
         return True
