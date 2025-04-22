@@ -5,41 +5,28 @@
 #         self.next = next
 class Solution:
     def swapNodes(self, head: Optional[ListNode], k: int) -> Optional[ListNode]:
-        # kth from beginning = fast after moving it k places ahead
-        # slow ends k places from the end
-        # k = 1 2 3 4 5 
-        #     [1,2,3,4,5]
-        #              f
-        #            s
+        # naive: copy list, reverse, and get kth node from the end (4) and swap with kth node from beginning in original list (2).
+        # fast/slow, move fast k steps ahead. move fast/slow one at a time until fast.next is null.
+        # slow will be at kth from the end
+        # when i == k, swap values, break and return??
 
-        slow = fast = head
-        k -= 1
-        while k:
-            k -= 1
+        # [1,2,3,4,5]
+        #    h
+        #        s
+
+        dummy = ListNode(0)
+        dummy.next = head
+
+        fast = slow = head
+        for _ in range(k-1):
             fast = fast.next
-        
-        start_k = fast
-        sk = start_k.val
 
         while fast and fast.next:
-            slow = slow.next
             fast = fast.next
-        end_k = slow
-        ek = end_k.val
-
-        dummy = ListNode(-1)
-        dummy.next = head
-        curr = head
-        while curr:
-            if curr == start_k:
-                curr.val = ek
-            elif curr == end_k:
-                curr.val = sk
-            curr = curr.next
-        return dummy.next
-
-
+            slow = slow.next
         
-
-
-
+        for i in range(k):
+            if i == k-1:
+                head.val,slow.val = slow.val,head.val
+            head = head.next
+        return dummy.next
