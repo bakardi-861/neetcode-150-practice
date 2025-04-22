@@ -9,18 +9,18 @@ class Solution:
         if not head or not head.next:
             return None
 
-        slow = fast = head
+        fast = slow = head
         while fast and fast.next:
             slow = slow.next
             fast = fast.next.next
             if fast == slow:
-               break
+                break
 
         if fast != slow:
             return None
         
         slow2 = head
-        while slow != slow2:
+        while slow2 != slow:
             slow2 = slow2.next
             slow = slow.next
         return slow
