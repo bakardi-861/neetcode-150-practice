@@ -14,11 +14,8 @@ class Solution:
                 curr.next,prev,curr = prev,curr,curr.next
             return prev
 
-        dummy = ListNode(0)
-        dummy.next = head
-
         fast = slow = head
-        prev = dummy
+        prev = None
 
         while fast and fast.next:
             prev = slow
@@ -32,8 +29,7 @@ class Solution:
         max_sum = 0
         
         while first and second: 
-            sum = first.val + second.val
-            max_sum = max(max_sum, sum)
+            max_sum = max(max_sum,first.val + second.val)
             first = first.next
             second = second.next
         return max_sum
