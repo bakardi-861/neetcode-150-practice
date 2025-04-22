@@ -30,14 +30,6 @@ class Solution:
         second = reverse(slow)
         first = head
         max_sum = 0
-        first_sum = 0
-        second_sum = 0
-
-        # head = [5,4,2,1]
-        # first = [4]
-        # second = [2]
-        # sum = 6
-
         
         while first and second: 
             sum = first.val + second.val
