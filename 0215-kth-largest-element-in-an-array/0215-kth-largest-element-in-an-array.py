@@ -1,8 +1,7 @@
 class Solution:
     def findKthLargest(self, nums: List[int], k: int) -> int:
-        k = len(nums)-k
+        k = len(nums) - k
         l,r = 0,len(nums)-1
-
         while l <= r:
             pivot = nums[random.randint(l,r)]
             lt,gt,i = l,r,l
@@ -25,4 +24,3 @@ class Solution:
             else:
                 return nums[k]
         return -1
-
