@@ -8,11 +8,11 @@ class Solution:
 
             while i <= gt:
                 if nums[i] < pivot:
-                    nums[lt],nums[i] = nums[i],nums[lt]
+                    nums[i],nums[lt] = nums[lt],nums[i]
                     lt += 1
                     i += 1
                 elif nums[i] > pivot:
-                    nums[gt],nums[i] = nums[i],nums[gt]
+                    nums[i],nums[gt] = nums[gt], nums[i]
                     gt -= 1
                 else:
                     i += 1
