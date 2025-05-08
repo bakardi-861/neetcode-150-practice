@@ -1,5 +1,7 @@
 class Solution:
     def sortSentence(self, s: str) -> str:
+        # Time: O(n)
+        # Space: O(n)
         # divide each word into into an array of strings
         # bucket sort bc number of letters is 1-9?
         # digit is always the last character of a word
