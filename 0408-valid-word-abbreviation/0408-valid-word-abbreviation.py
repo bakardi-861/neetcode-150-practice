@@ -1,21 +1,24 @@
 class Solution:
     def validWordAbbreviation(self, word: str, abbr: str) -> bool:
-        i = j = 0
-        while i < len(word) and j < len(abbr):
-            # build the number
-            if abbr[j].isnumeric():
-                if abbr[j] == "0":# can't have leading 0s
+        # Two pointers
+        i, j = 0, 0
+        while i < len(abbr) and j < len(word):
+            if abbr[i].isdigit():
+                if abbr[i] == "0":
                     return False
-                
                 number = ""
-                while j < len(abbr) and abbr[j].isnumeric():
-                    number += abbr[j]
-                    j += 1
-                i += int(number)
-
-            else: # both are letters, so skip ahead if letters are the same
-                if abbr[j] != word[i]: # letters are not the same
+                while i < len(abbr) and abbr[i].isdigit():
+                    number += abbr[i]
+                    i += 1
+                j += int(number)
+            else:
+                if j >= len(word) or word[j] != abbr[i]:
                     return False
-                j += 1
                 i += 1
-        return i == len(word) and j == len(abbr)
+                j += 1
+        return i == len(abbr) and j == len(word)
+
+    # Post Mortem
+    # Didn't account for edge case where j could be out of bounds of word if number in abbr is too large
+    # With that, instead of returning True at the end I have to return whether i and j are at the end index of abbr and word respectively.
+    # Final time: 25:15
