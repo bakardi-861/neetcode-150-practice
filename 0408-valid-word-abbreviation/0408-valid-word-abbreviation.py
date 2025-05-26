@@ -19,6 +19,6 @@ class Solution:
         return i == len(abbr) and j == len(word)
 
     # Post Mortem
-    # Didn't account for edge case where j could be out of bounds of word if number in abbr is too large
+    # Didn't account for edge case where i could be OOB of abbr or j could be out of bounds of word if number in abbr is too large
     # With that, instead of returning True at the end I have to return whether i and j are at the end index of abbr and word respectively.
-    # Final time: 25:15
+    # Final time: 25:19
