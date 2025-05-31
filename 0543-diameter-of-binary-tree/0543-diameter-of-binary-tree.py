@@ -37,3 +37,6 @@ class Solution:
 
         # going up one level in the tree 
         return 1 + max(l_length,r_length)
+
+        # T: O(n) - n is the num of nodes in the tree
+        # S: O(n) - where n is the height of the tree/recursion stack
