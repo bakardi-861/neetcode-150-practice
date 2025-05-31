@@ -26,14 +26,44 @@ class Solution:
         # count = 5 res = 9
         # return res
         
-        max_range = arr[-1] + k + 1
-        count = 0
-        res = -1
-        for i in range(1,max_range):
-            if i not in arr:
-                count += 1
-            if count == k:
-                res = i
-                return res
+        # max_range = arr[-1] + k + 1
+        # count = 0
+        # res = -1
+        # for i in range(1,max_range):
+        #     if i not in arr:
+        #         count += 1
+        #     if count == k:
+        #         res = i
+        #         return res
 
         # Got the naive solution in the first 5 or 6 minutes, but was struggling with the binary search solution for 16 minutes. Wrote the naive so that I would at least have that.
+        # Wasted time on another solution that didn't work where I iterate through the range and the arr simultaneously, but ran into index out of bounds errors when the kth missing number is beyond the range of the arr.
+
+        # I gave up after 22 minutes and watching the Cracking FAANG video
+        # He gave the intuition that there are 3 cases:
+        # 1. everything to the left of the first num in arr is missing -> return arr[0] - k
+        # 2. everything to the right of the last num in arr in missing -> return arr[-1] + k
+        # 3. mix of the two
+        # basically if our first element is 4 for example, and k = 7, we know that 1,2, and 3 are missing already, so when we iterate through the arr, k = 4.
+        # Compare nums[i] and nums[i+1]. If the difference between them is 1, then they aren't missing bc arr is sorted. Else, there is a missing number, so we do k -= difference.
+        # If k == 0, return that num
+
+
+        if arr[0] != 1:
+            if arr[0] - 1 >= k:
+                return k
+            else:
+                k -= arr[0] - 1
+        i = 0
+        while i < len(arr)-1:
+            diff = arr[i+1] - arr[i]
+            if diff != 1:
+                for num in range(arr[i]+1,arr[i+1]):
+                    k -= 1
+
+                    if not k:
+                        return num
+            i += 1
+
+        if k:
+            return arr[-1] + k
