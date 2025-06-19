@@ -13,7 +13,7 @@ class Solution:
             ans += 1
 
         for i in range(k, len(arr)):
-            win_sum += arr[i] - arr[i - k]
+            win_sum += arr[i] - arr[i - k] # adding new element and subtracting old element
             if win_sum >= threshold * k:
                 ans += 1
         return ans
