@@ -1,18 +1,24 @@
 # from collections import defaultdict
 class Solution:
     def containsNearbyDuplicate(self, nums: List[int], k: int) -> bool:
-        # 2 ptrs in a sliding window kind of way because we want indices that are abs(i-j) <= k
+        # we want distinct indices that are abs(i-j) <= k
         l = 0
-        # win = defaultdict(int) # might not even need this part for this
-        for r in range(1,len(nums)): #distinct indices
-            # win[r] += 1
+        win = defaultdict(int)
+        second_index = -1
+        for r in range(len(nums)): #distinct indices
+            if nums[r] not in win:
+                win[nums[r]] = r
+            else:
+                second_index = win[nums[r]]
+
 
             # shrink window when abs value too big
-            if abs(r-l) > k:
-                # win[l] -= 1
-                #if win[l] == 0: del win[l]
+            if len(win) > k:
+                if l == second_index:
+                    second_index = -1
+                del win[nums[l]]
                 l += 1
             # valid window found
-            if l < r and nums[l] == nums[r]:
+            if second_index != -1 and nums[second_index] == nums[r]:
                 return True
         return False
