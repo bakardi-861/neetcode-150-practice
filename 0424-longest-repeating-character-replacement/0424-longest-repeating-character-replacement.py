@@ -1,11 +1,12 @@
 class Solution:
     def characterReplacement(self, s: str, k: int) -> int:
-        # "ABAB"
+        # "AAAA"
         #  l
         #     r
-        #  win = {"A":2,"B":2}
-        #  minF = 2
+        #  win = {"A":4}
+        #  minF = 4
         #  k = 2
+        # longest = 2
         
         win = Counter()
         l = 0
@@ -14,12 +15,12 @@ class Solution:
         for r in range(len(s)):
             win[s[r]] += 1
             # get minimum frequency
-            min_f = min(win.values())
+            min_f = (r-l+1) - max(win.values())
             while min_f > k:
                 win[s[l]] -= 1
                 l += 1
                 # update min
-                min_f = min(win.values())
+                min_f = (r-l+1) - max(win.values())
             if min_f <= k:
                 longest = max(longest,r-l+1)
         return longest
