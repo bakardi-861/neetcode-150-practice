@@ -10,18 +10,19 @@ class Solution:
         #     ans = 10
 
         
-        win = defaultdict(int)
+        win = {"a":0,"b":0,"c":0}
         l = 0
         ans = 0
         chars = set(["a","b","c"])
         for r in range(len(s)):
             win[s[r]] += 1
-            while set(win.keys()) == chars:
+            while self.has_all_chars(win):
                 ans += 1 + ((len(s)-1) - r)
                 win[s[l]] -= 1
-                if win[s[l]] == 0:
-                    del win[s[l]]
                 l += 1
         return ans
+
+    def has_all_chars(self,win:dict):
+        return all(f > 0 for f in win.values())
 
 
