@@ -19,12 +19,11 @@ class Solution:
                 node = q.popleft()
                 
                 level_sum += node.val
-                if i == level_size-1:
-                    res.append(level_sum / level_size)
                 
                 if node.left:
                     q.append(node.left)
                 if node.right:
                     q.append(node.right)
+            res.append(level_sum / level_size)
         return res
                 
