@@ -8,7 +8,7 @@ class Solution:
     def minDepth(self, root: Optional[TreeNode]) -> int:
         # BFS
         if not root:
-            return None
+            return 0
 
         q = deque([root])
         min_depth = float("inf")
