@@ -7,7 +7,7 @@ class Solution:
         ana_map = defaultdict(List[str])
 
         for s in strs:
-            s_count = tuple(sorted(s)) #O(nlogk)
+            s_count = tuple(sorted(s)) #O(klogk)
             if s_count in ana_map:
                 ana_map[s_count].append(s)
             else:
