@@ -4,7 +4,7 @@ class Solution:
         # [-1,0,3,5,9,12]
         #  l      m      r
         
-        l,r = 0,len(nums)-1
+        l,r = 0,len(nums)
         while l < r:
             mid = (r+l) // 2
             if nums[mid] < target:
