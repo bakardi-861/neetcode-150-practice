@@ -1,16 +1,23 @@
 class Solution:
     def maxProfit(self, prices: List[int]) -> int:
-        max_p = 0
+        # prices = [7,1,5,3,6,4]
+        #             l
+        #                     r
+        # profit = 3
+        # max = 5
+
         l = 0
-        for r in range(1,len(prices)):
+        max_profit = 0
+        for r in range(len(prices)):
             profit = prices[r] - prices[l]
+
             if profit < 0:
                 l = r
-            max_p = max(max_p, profit)
-        return max_p
+            max_profit = max(profit,max_profit)
+        return max_profit
+            
 
-        # prices = [2,1,2,1,0,1,2]
-        #                   l
-        #                       r
-        # profit = 2
-        # max_p = 2
+        # profit = prices[r] - prices[l]
+        # shrink window when profit is negative
+        # otherwise, store max profit
+        # return max
