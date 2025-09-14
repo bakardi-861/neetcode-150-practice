@@ -6,7 +6,7 @@ class Solution:
         l = 0
         for r in range(len(s)):
             win[s[r]] += 1
-            maxF = max(win.values()) # inefficient
+            maxF = max(maxF,win[s[r]])
             if (r-l+1) - maxF > k:
                 win[s[l]] -= 1
                 if win[s[l]] == 0:
