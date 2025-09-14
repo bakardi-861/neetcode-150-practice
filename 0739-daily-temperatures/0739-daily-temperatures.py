@@ -1,11 +1,18 @@
 class Solution:
     def dailyTemperatures(self, temperatures: List[int]) -> List[int]:
-        # mono stack - decreasing order
+        # monotonic stack
         stack = []
         ans = [0] * len(temperatures)
-        for i,temp in enumerate(temperatures):
-            while stack and temp > temperatures[stack[-1]]:
-                pop = stack.pop()
-                ans[pop] = i - pop
-            stack.append(i)
-        return ans            
+        hottest = 0
+
+        for i in reversed(range(len(temperatures))):
+            current_temp = temperatures[i]
+            if current_temp >= hottest:
+                hottest = current_temp
+                continue
+            
+            days = 1
+            while temperatures[i + days] <= current_temp:
+                days += ans[i + days]
+            ans[i] = days
+        return ans
