@@ -10,19 +10,24 @@ class Solution:
         # create a set for each row and col, and sub box to store each digit.
         # 3x3 box index: box_index = (row // 3, col // 3)
 
-        ROWS,COLS = len(board), len(board[0])
-        row_map, col_map, box_map = defaultdict(set), defaultdict(set), defaultdict(set)
-        
-        # skip if '.'
-        # check each row
-        for r in range(ROWS):
-            for c in range(COLS):
+
+        seen = set()
+
+        for r in range(9):
+            for c in range(9):
                 val = board[r][c]
-                if val == '.':
+                if val == ".":
                     continue
-                if val in row_map[r] or val in col_map[c] or val in box_map[(r // 3, c // 3)]:
+                
+                # create keys
+                row_key = ("row", r, val)
+                col_key = ("col", c, val)
+                box_key = ("box", r // 3, c // 3, val)
+                
+                if row_key in seen or col_key in seen or box_key in seen:
                     return False
-                row_map[r].add(val)
-                col_map[c].add(val)
-                box_map[(r // 3, c // 3)].add(val)
+                
+                seen.add(row_key)
+                seen.add(col_key)
+                seen.add(box_key)
         return True
