@@ -1,24 +1,18 @@
 class Solution:
     def characterReplacement(self, s: str, k: int) -> int:
-        # "AAAA"
-        #  l
-        #     r
-        #  win = {"A":4}
-        #  minF = 4
-        #  k = 2
-        # longest = 2
-        
-        win = Counter()
+        ans = 0
+        maxF = 0
+        win = defaultdict(int)
         l = 0
-        longest = 0
-        min_f = 0
-        max_f = 0
         for r in range(len(s)):
             win[s[r]] += 1
-            max_f = max(max_f,win[s[r]])
-            if (r-l+1) - max_f > k:
+            maxF = max(win.values()) # inefficient
+            if (r-l+1) - maxF > k:
                 win[s[l]] -= 1
+                if win[s[l]] == 0:
+                    del win[s[l]]
                 l += 1
-            longest = max(longest,r-l+1)
-        return longest
-
+            ans = max(r-l+1,ans)
+        return ans
+            
+           
