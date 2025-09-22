@@ -7,27 +7,17 @@ class Solution:
         # assume each senator will ban senator rights of adjacent opposing senators
         # array is circular (last guy can ban first guy)
 
-        # d_q = [i if s == "D" for i,s in enumerate(len(senate))]
-        # r_q = [i if s == "R" for i,s in enumerate(len(senate))]
-        d_q,r_q = deque(),deque()
+        d_q = deque([i for i, s in enumerate(senate) if s == "D"])
+        r_q = deque([i for i, s in enumerate(senate) if s == "R"])
         n = len(senate)
-
-        # append indices to each q - practice shorthand
-        for i,s in enumerate(senate):
-            if s == "D":
-                d_q.append(i)
-            else:
-                r_q.append(i)
 
         while d_q and r_q:
             if d_q[0] < r_q[0]:
                 r_q.popleft()
-                next_index = d_q.popleft() + n
-                d_q.append(next_index)
+                d_q.append(d_q.popleft() + n)
             else:
                 d_q.popleft()
-                next_index = r_q.popleft() + n
-                r_q.append(next_index)
+                r_q.append(r_q.popleft() + n)
         return "Radiant" if r_q else "Dire"
 
         
