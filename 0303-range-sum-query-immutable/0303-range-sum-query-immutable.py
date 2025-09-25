@@ -4,7 +4,6 @@ class NumArray:
         self.prefix = [0] * (len(nums) + 1)
         for i in range(len(nums)):
             self.prefix[i + 1] = self.prefix[i] + nums[i]
-        print(self.prefix)
 
       # prefix: [0, -2, -2, 1, -4, -2, -3]
 
