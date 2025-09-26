@@ -21,16 +21,35 @@ class Solution:
         #  i
         # min = 2
 
-        pos_map = Counter()
-        for n in nums:
-            if n > 0:
-                pos_map[n] += 1
+        # array as a hashmap trick
+        # if nums[i] < 0, i += 1
+        # all negative numbers will end up going further right
+        
+        # if min exists, increment it.
+        # in the 2nd loop if nums[i] is a negative number or nums[i] > min, then return min
+        # check if duplicate, then swap with i-1 spot.
+        #  0 1  2 3
+        # [4,4,-1,1]
+        # [1,-1,4,4]
+        #     i
+        #     j 
 
-        min = 1
-        for key in pos_map:
-            if min in pos_map and pos_map[min] > 0:
-                pos_map[min] -= 1
-                min += 1
-            else:
-                return min
-        return min
+    
+        n = len(nums)
+        
+        # Step 1: clean invalids
+        for i in range(n):
+            if nums[i] <= 0 or nums[i] > n:
+                nums[i] = n+1 # this puts all numbers out of bounds/negative numbers at the end
+        
+        # Step 2: place numbers in correct index
+        for i in range(n):
+            while 1 <= nums[i] <= n and nums[nums[i]-1] != nums[i]:
+                j = nums[i] - 1
+                nums[i], nums[j] = nums[j], nums[i]
+        
+        # Step 3: find missing
+        for i in range(n):
+            if nums[i] != i+1:
+                return i+1
+        return n+1
