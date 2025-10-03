@@ -1,57 +1,16 @@
 class Solution:
     def productExceptSelf(self, nums: List[int]) -> List[int]:
-        #         0 1 2 3
-        # nums = [1,2,3,4]
-        # ans =  [24,12,8,6]
-        # Output: [24,12,8,6]
-        #           0 1 2 3
-        # # nums = [1,2,3,4]
-        #             i
-        #             l
-        #               r
-        # # prefix products = [1,1,2,6,24]
-        #                          i
-        #                          l
-        #                              r  
-            # ans equation = prefix[l]
-            # ans = []
-        # 
+        n = len(nums)
+        prefix = [1] * n  # prefix[i] will hold product of elements to the left of i
 
-        
-        # nums [1,2,3,4]
-        #         i
-        # pre [1,1,2,6,24]
-        #          i
-        # # suffix [24,24,12,4,1]
-        #              i
+        # Step 1: build prefix array without a separate run variable
+        for i in range(1, n):
+            prefix[i] = prefix[i-1] * nums[i-1]
 
-        # prefix = [1] * (len(nums)+1)
-        # for i in range(len(nums)):
-        #     prefix[i+1] = prefix[i] * nums[i]
-        
-        # suffix = [1] * (len(nums)+1)
-        # for i in reversed(range(len(nums))):
-        #     suffix[i] = suffix[i+1] * nums[i]
-
-        # ans = []
-        # for i in range(len(nums)):
-        #    answer.append(suffix[i] * prefix[i])
-
-        # return ans
-
-
-        ans = [1] * len(nums)
-
-        prefix = 1
-        for i in range(len(nums)):
-            ans[i] = prefix
-            prefix *= nums[i]
-        
+        # Step 2: multiply in suffix products using a running variable
         suffix = 1
-        for i in reversed(range(len(nums))):
-            ans[i] *= suffix
+        for i in reversed(range(n)):
+            prefix[i] *= suffix
             suffix *= nums[i]
-        return ans
 
-
-        
+        return prefix
