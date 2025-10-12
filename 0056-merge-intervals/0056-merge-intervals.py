@@ -1,20 +1,14 @@
 class Solution:
     def merge(self, intervals: List[List[int]]) -> List[List[int]]:
-        if not intervals:
-            return []
-
-        # Step 1: sort by start time
+        if len(intervals) < 2:
+            return intervals
         intervals.sort(key=lambda x: x[0])
-
-        merged = [intervals[0]]
-
-        for current in intervals[1:]:
-            prev = merged[-1]
-
-            if current[0] <= prev[1]:  # overlap
-                # merge by updating end
-                prev[1] = max(prev[1], current[1])
-            else:
-                merged.append(current)
-
+        merged = []
+        j = 1
+        for i in intervals:
+            # nothing merged or last merged end < current start
+            if not merged or merged[-1][1] < i[0]:
+                merged.append(i)
+            else: # merge: change the last end time to the max of last merged or current (smaller start time is kept)
+                merged[-1][1] = max(merged[-1][1],i[1])
         return merged
