@@ -4,23 +4,20 @@ class Solution:
         # n-1 incoming edges to the judge
             # return immediately
         
-        indegree = [0] * (n+1)
-        outdegree = [0] * (n+1)
-        # graph = [[] for _ in range(n+1)]
+        graph = [0 for _ in range(n+1)]
 
         # [1]->[2]
-     
-        # # g = [[][2][]]
-        # in = [0,0,1]
-        # out = [0,1,0]
 
+        # indegree - outdegree
+        # n-1 - 0
+     
         for s,d in trust:
             # graph[s].append(d)
-            indegree[d] += 1
-            outdegree[s] += 1
+            graph[s] -= 1
+            graph[d] += 1
 
-        for i in range(len(indegree)):
-            if indegree[i] == n-1 and outdegree[i] == 0:
+        for i in range(1,len(graph)):
+            if graph[i] == n-1:
                 return i
         return -1
 
