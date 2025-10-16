@@ -11,8 +11,7 @@ class Solution:
                 if not win[s2[l]]:
                     del win[s2[l]]
                 l += 1
-            if r-l+1 == k:
-                if win == s1_count:
+            if r-l+1 == k and win == s1_count:
                     return True
         return False
 
