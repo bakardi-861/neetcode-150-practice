@@ -1,14 +1,28 @@
-# Definition for a binary tree node.
-# class TreeNode:
-#     def __init__(self, val=0, left=None, right=None):
-#         self.val = val
-#         self.left = left
-#         self.right = right
+# KEY: right child has no child! focus on left
 class Solution:
     def upsideDownBinaryTree(self, root: Optional[TreeNode]) -> Optional[TreeNode]:
-        if not root:
-            return None
-        l,r,root.left,root.right = root.left, root.right,None,None
-        while l:
-            l.left,l.right, root,l,r = r,root,l,l.left,l.right
-        return root
+
+        def dfs(root, new_left, new_right):
+            if root is None:
+                return None
+
+            # backup copies
+            orig_left = root.left
+            orig_right = root.right
+
+            # update root's children
+            root.left = new_left
+            root.right = new_right
+
+            # leaf is the new root
+            if orig_left is None:
+                return root
+
+            # update left child recursively
+            return dfs(
+                root = orig_left, 
+                new_left = orig_right, 
+                new_right = root
+            )            
+        
+        return dfs(root, None, None)        
