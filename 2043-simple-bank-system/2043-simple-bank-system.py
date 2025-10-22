@@ -1,41 +1,44 @@
-class Bank:
-    # n counts: 1 - n
-    # balance for each account is stored in a 0-index array
-    # account "i+1" = balance[i]
+from threading import Lock
 
-    # Valid:
-    # 1: account numbers are between 1 - n
-    # 2: money withdrawn/transferred is <= balance[i]
+class Bank:
 
     def __init__(self, balance: List[int]):
-        self.balance = balance
+        # 1 - n account numbers
+        self.bank = {i+1:balance[i] for i in range(len(balance))}
+        #print(self.bank)
+        # self.lock = new Lock()
 
     def transfer(self, account1: int, account2: int, money: int) -> bool:
-        b = self.balance
-        # if account numbers are valid
-        if 1 <= account1 <= len(b) and 1 <= account2 <= len(b):
-            # account1 -> account2, check account1-1 balance
-            if money <= b[account1-1]:
-                b[account2-1] += money
-                b[account1-1] -= money
-                return True
+        # money can only be transferred if both accounts exist
+        # also only if account1 balance >= money to transfer
+        if (account1 in self.bank and account2 in self.bank) and self.bank[account1] >= money:
+            self.bank[account1] -= money
+            self.bank[account2] += money
+            #print(self.bank)
+            return True
+        #print(self.bank)
         return False
-
 
     def deposit(self, account: int, money: int) -> bool:
-        b = self.balance
-        if 1 <= account <= len(b):
-            b[account-1] += money
+        # money can only be depo if acct exist
+        if account in self.bank:
+            self.bank[account] += money
+            #print(self.bank)
             return True
+        #print(self.bank)
         return False
+        
 
     def withdraw(self, account: int, money: int) -> bool:
-        b = self.balance
-        if 1 <= account <= len(b) and money <= b[account-1]:
-            b[account-1] -= money
+        # money can only be withdrw if acct exist
+        # also only if account balance >= money to withdraw
+        #print(self.bank)
+        if account in self.bank and self.bank[account] >= money:
+            self.bank[account] -= money
+            #print(self.bank)
             return True
+        #print(self.bank)
         return False
-
 
 # Your Bank object will be instantiated and called as such:
 # obj = Bank(balance)
