@@ -11,13 +11,26 @@ class Solution:
         # majority = (2,4)
         # res = 2
 
-        map = Counter(nums)
+        # naive
+        # map = Counter(nums)
+        # n = len(nums)
+        # for key,val in map.items():
+        #     if val >= (n/2):
+        #         return key
+
+        # Sorting O(nlogn) time, O(1) space if not counting .sort()
         n = len(nums)
-        for key,val in map.items():
-            if val >= (n/2):
-                return key
-                
-
-
-
- 
+        nums.sort()
+        count = 1
+        majority = nums[0]
+        for i in range(1,len(nums)):
+            if nums[i] == nums[i-1]:
+                count += 1
+                if count >= (n/2):
+                    majority = nums[i]
+            else:
+                count = 1
+        return majority
+        
+        # Majority Vote Algo
+        
