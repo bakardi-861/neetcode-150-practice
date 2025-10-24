@@ -1,7 +1,7 @@
 class MyHashSet:
 
     def __init__(self):
-        self.buckets = [[] for _ in range(10 ** 6)]
+        self.buckets = [[] for _ in range(10 ** 4)]
 
     def hash(self,key):
         return key % len(self.buckets)
