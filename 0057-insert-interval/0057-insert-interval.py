@@ -1,36 +1,22 @@
 class Solution:
     def insert(self, intervals: List[List[int]], newInterval: List[int]) -> List[List[int]]:
-        # naive way to do this is to insert new interval, sort and then merge intervals: O(nlogn) time
-        # psuedo, then correct - O(n) solution
-        # intervals is already sorted so I don't have to sort again
-        start, end = newInterval # start and end that I am comparing current against
-        merged = []
-        i = 0
-        for i,interval in enumerate(intervals):
-            # insert everything non-overlapping before newInterval
-            curr_start,curr_end = interval
-            if curr_end < start:
-                merged.append(interval)
-            # new interval can be inserted here bc curr start > end: it will be between merged[-1] and curr
-            elif curr_start > end:
-                break
-            # merge overlaps into each other and set that as newInterval to add
-            elif start <= curr_end and curr_start <= end:
-                newInterval = [min(curr_start,start),max(curr_end,end)]
-                start,end = newInterval # set start/end as new interval to update comparison
-        
-        else: # if loop completed normally, move i to the next interval to include
-            i = i + 1
-        
+        res = []
+
+        new_start, new_end = newInterval
+        for curr_start, curr_end in intervals:
+            # if new end before curr_start, just append it and append the rest of intervals after
+            if new_end < curr_start:
+                res.append([new_start, new_end])
+                res += intervals[intervals.index([curr_start, curr_end]):]
+                return res
+            # append everything before the newInterval
+            elif new_start > curr_end:
+                res.append([curr_start, curr_end])
+            # merge: set new curr_start and curr_end as the min and max of both
+            # keep comparing new to current
+            else:
+                new_start = min(new_start, curr_start)
+                new_end = max(new_end, curr_end)
         # insert new interval
-        merged.append(newInterval)
-
-        # insert everything non-overlapping after newInterval
-        if i < len(intervals):
-            merged.extend(intervals[i:])
-        return merged
-
-# [[1,3],[6,9]]
-#         i
-# [2,5]
-# merged = [[1,5]]
+        res.append([new_start, new_end])
+        return res
