@@ -5,26 +5,29 @@ class Solution:
         # intervals is already sorted so I don't have to sort again
         start, end = newInterval # start and end that I am comparing current against
         merged = []
-        index = 0
+        i = 0
         for i,interval in enumerate(intervals):
             # insert everything non-overlapping before newInterval
             curr_start,curr_end = interval
             if curr_end < start:
                 merged.append(interval)
             # new interval can be inserted here bc curr start > end: it will be between merged[-1] and curr
-            elif curr_start > end: 
+            elif curr_start > end:
                 break
             # merge overlaps into each other and set that as newInterval to add
             elif start <= curr_end and curr_start <= end:
                 newInterval = [min(curr_start,start),max(curr_end,end)]
                 start,end = newInterval # set start/end as new interval to update comparison
-            index = i+1
+        
+        else: # if loop completed normally, move i to the next interval to include
+            i = i + 1
+        
         # insert new interval
         merged.append(newInterval)
 
         # insert everything non-overlapping after newInterval
-        if index < len(intervals):
-            merged.extend(intervals[index:])
+        if i < len(intervals):
+            merged.extend(intervals[i:])
         return merged
 
 # [[1,3],[6,9]]
