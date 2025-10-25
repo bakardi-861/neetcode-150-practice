@@ -1,14 +1,14 @@
 class Solution:
     def merge(self, intervals: List[List[int]]) -> List[List[int]]:
-        if len(intervals) < 2:
-            return intervals
-        intervals.sort(key=lambda x: x[0])
+        # write pseudocode, then change to correct code
         merged = []
-        j = 1
-        for i in intervals:
-            # nothing merged or last merged end < current start
-            if not merged or merged[-1][1] < i[0]:
-                merged.append(i)
-            else: # merge: change the last end time to the max of last merged or current (smaller start time is kept)
-                merged[-1][1] = max(merged[-1][1],i[1])
+        intervals.sort(key=lambda x:x[0])
+
+        for interval in intervals:
+            # if merged array is empty or last merged end time is smaller than current interval start time
+            if not merged or merged[-1][1] < interval[0]:
+                merged.append(interval)
+            else: # current interval is smaller than last merged, so that means we have to merge both
+                # merge current interval into last merged interval
+                merged[-1] = [min(interval[0],merged[-1][0]),max(interval[1],merged[-1][1])]
         return merged
