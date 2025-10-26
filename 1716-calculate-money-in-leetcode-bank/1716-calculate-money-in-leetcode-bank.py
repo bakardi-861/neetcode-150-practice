@@ -10,3 +10,5 @@ class Solution:
         total += (complete_week + 1 + complete_week + remaining_days) * remaining_days // 2 #total for remaining days
 
         return total
+
+        # can also simulate with a while loop/for loop in O(n) time
