@@ -1,16 +1,14 @@
 class Solution:
     def sumFourDivisors(self, nums: List[int]) -> int:
-        def divisors(x):
-            res = set()
-            for i in range(1, int(x**0.5) + 1):
-                if x % i == 0:
-                    res.add(i)
-                    res.add(x // i)
-            return sorted(res)
-
-        res = 0
-        for n in nums:
-            divs = divisors(n)
-            if len(divs) == 4:
-                res += sum(divs)
+        res=0
+        for i in nums:
+            x=set()
+            for j in range(1,floor(sqrt(i)) + 1):
+                if i%j==0:
+                    x.add(j)
+                    x.add(i//j)
+                if len(x)>4:
+                    break
+            if len(x)==4:
+                res+=sum(x)
         return res
