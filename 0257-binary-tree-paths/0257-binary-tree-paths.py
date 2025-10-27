@@ -6,25 +6,24 @@
 #         self.right = right
 class Solution:
     def binaryTreePaths(self, root: Optional[TreeNode]) -> List[str]:
-        res = []
+        paths = []
         def dfs(root,path):
+            nonlocal paths
+
             if not root:
                 return
-
-            path.append(str(root.val))
-
-            # if leaf, append to result
-            if not root.left and not root.right:
-                 res.append("->".join(path))
-
-            else: # keep dfs'ing
-                dfs(root.left,path)
-                dfs(root.right,path)
             
-            # prune path
-            path.pop()
-        
-        dfs(root,[])
-        return res
+            path.append(root.val)
 
-        
+            if not root.left and not root.right:
+                paths.append("->".join(map(str, path)))
+                path.pop() #  pop root after finding answer
+                return
+            
+            dfs(root.left,path)
+            dfs(root.right,path)
+            path.pop() # pop root after exploring subtrees
+            return
+
+        dfs(root,[])
+        return paths
