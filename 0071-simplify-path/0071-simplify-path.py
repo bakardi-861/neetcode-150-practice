@@ -1,12 +1,27 @@
 class Solution:
     def simplifyPath(self, path: str) -> str:
+        # stack - Meta-tagged
+        # directories separated by single '/', treat multiple slashes as 1
+        # delete trailing '/' unless it is root directory
+        # anything not '.','..' or '/' treated as a directory name
+
+        # Input: path = "/home/user/Documents/../Pictures"
+        #                                                 i
+        # ['/','home','/','user','/','Pictures']
+        split_path = path.split('/')
         stack = []
-        path_items = path.split("/")
-        for item in path_items:
-            if not item or item == ".":
+        
+        for c in split_path:
+            if c in ['','.']: 
                 continue
-            if item == "..":
-                if stack: stack.pop()
+            elif c == '..':
+                if stack:
+                    stack.pop()
+                continue
             else:
-                stack.append(item)
-        return "/" + "/".join(stack)
+                stack.append(c)
+        return '/' + "/".join(stack)
+
+
+
+
