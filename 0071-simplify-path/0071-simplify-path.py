@@ -12,14 +12,10 @@ class Solution:
         stack = []
         
         for c in split_path:
-            if c in ['','.']: 
-                continue
-            elif c == '..':
-                if stack:
-                    stack.pop()
-                continue
-            else:
+            if c not in ['','.','..']: 
                 stack.append(c)
+            elif stack and c == '..':
+                stack.pop()
         return '/' + "/".join(stack)
 
 
