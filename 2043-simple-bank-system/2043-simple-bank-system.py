@@ -1,44 +1,37 @@
-from threading import Lock
-
 class Bank:
 
     def __init__(self, balance: List[int]):
-        # 1 - n account numbers
         self.bank = {i+1:balance[i] for i in range(len(balance))}
-        #print(self.bank)
-        # self.lock = new Lock()
 
     def transfer(self, account1: int, account2: int, money: int) -> bool:
-        # money can only be transferred if both accounts exist
-        # also only if account1 balance >= money to transfer
-        if (account1 in self.bank and account2 in self.bank) and self.bank[account1] >= money:
-            self.bank[account1] -= money
-            self.bank[account2] += money
-            #print(self.bank)
-            return True
-        #print(self.bank)
-        return False
+        # either account is not in bank or money > account1 balance, False
+        if not account1 in self.bank or not account2 in self.bank or money > self.bank[account1]:
+            return False
+
+        self.bank[account1] -= money
+        self.bank[account2] += money
+        return True
+
 
     def deposit(self, account: int, money: int) -> bool:
-        # money can only be depo if acct exist
-        if account in self.bank:
-            self.bank[account] += money
-            #print(self.bank)
-            return True
-        #print(self.bank)
-        return False
+        if account not in self.bank:
+            return False
+
+        self.bank[account] += money
+        return True
         
 
     def withdraw(self, account: int, money: int) -> bool:
-        # money can only be withdrw if acct exist
-        # also only if account balance >= money to withdraw
-        #print(self.bank)
-        if account in self.bank and self.bank[account] >= money:
-            self.bank[account] -= money
-            #print(self.bank)
-            return True
-        #print(self.bank)
-        return False
+        if account not in self.bank or money > self.bank[account]:
+            return False
+        
+        self.bank[account] -= money
+        return True
+
+    # top k
+        
+        
+
 
 # Your Bank object will be instantiated and called as such:
 # obj = Bank(balance)
