@@ -1,24 +1,13 @@
 class Solution:
-    def alternateDigitSum(self, n: int) -> int:
-        # for each digit in n
-            #if pos: 
-                # add to sum
-            #else: 
-                #subtract from sum
+    def alternateDigitSum(self, num):
+        num_str = str(num)
+        digits = [int(d) for d in list(num_str)]
+        len_digits = len(digits)
         
-        num = str(n)
-        pos = True
-        sum = 0
+        ret_val = 0
         i = 0
-        while i < len(num):
-            n = int(num[i])
-            if pos:
-                sum += n
-                pos = False
-            else:
-                sum -= n
-                pos = True
+        while (i < len_digits):
+            ret_val += digits[i] if (i % 2 == 0) else - digits[i]
             i += 1
-        return sum
 
-
+        return ret_val
