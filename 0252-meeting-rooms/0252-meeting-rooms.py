@@ -1,15 +1,10 @@
 class Solution:
     def canAttendMeetings(self, intervals: List[List[int]]) -> bool:
-        if not intervals:
-            return True
-        intervals.sort(key=lambda x:x[0])
-        prev = intervals[0]
-        for i in range(1,len(intervals)):
-            start,end = intervals[i]
-            if start < prev[1]:
-                return False
-            prev = [start,end]
-        return True
-
-# [[2,4],[7,10]]
-#             i
+        intervals.sort(key=lambda x: x[0])
+        merged = []
+        for s,e in intervals:
+            if not merged or merged[-1][1] <= s:
+                merged.append([s,e])
+            else:
+                merged[-1][1] = max(e,merged[-1][1])
+        return len(merged) == len(intervals)
