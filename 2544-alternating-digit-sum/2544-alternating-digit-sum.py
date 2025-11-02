@@ -1,5 +1,12 @@
 class Solution:
     def alternateDigitSum(self, n: int) -> int:
+        # rev = 0
+        # tmp = n
+        # while tmp > 0:
+        #     rev = rev * 10 + tmp % 10
+        #     tmp //= 10
+        # Can also reverse number so we don't need the step at the end
+
         sign = 1      # Start with + for the last digit
         total = 0
 
