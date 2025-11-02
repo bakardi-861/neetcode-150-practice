@@ -1,36 +1,30 @@
 class Bank:
 
     def __init__(self, balance: List[int]):
-        self.bank = {i+1:balance[i] for i in range(len(balance))}
+        self.bank = balance
+        self.n = len(balance)
+        # 0 to n-1 accounts
 
     def transfer(self, account1: int, account2: int, money: int) -> bool:
-        # either account is not in bank or money > account1 balance, False
-        if not account1 in self.bank or not account2 in self.bank or money > self.bank[account1]:
+        # either account doesnt exist or money > account1 balance
+        if self.n < account1-1 or self.n < account2-1 or money > self.bank[account1-1]:
             return False
-
-        self.bank[account1] -= money
-        self.bank[account2] += money
+        self.bank[account1-1] -= money
+        self.bank[account2-1] += money
         return True
 
 
     def deposit(self, account: int, money: int) -> bool:
-        if account not in self.bank:
+        if self.n < account-1:
             return False
-
-        self.bank[account] += money
+        self.bank[account-1] += money
         return True
-        
 
     def withdraw(self, account: int, money: int) -> bool:
-        if account not in self.bank or money > self.bank[account]:
+        if self.n < account-1 or money > self.bank[account-1]:
             return False
-        
-        self.bank[account] -= money
+        self.bank[account-1] -= money
         return True
-
-    # top k
-        
-        
 
 
 # Your Bank object will be instantiated and called as such:
