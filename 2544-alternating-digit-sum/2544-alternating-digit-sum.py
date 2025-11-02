@@ -1,13 +1,13 @@
 class Solution:
-    def alternateDigitSum(self, num):
-        num_str = str(num)
-        digits = [int(d) for d in list(num_str)]
-        len_digits = len(digits)
-        
-        ret_val = 0
-        i = 0
-        while (i < len_digits):
-            ret_val += digits[i] if (i % 2 == 0) else - digits[i]
-            i += 1
+    def alternateDigitSum(self, n: int) -> int:
+        sign = 1      # Start with + for the last digit
+        total = 0
 
-        return ret_val
+        while n > 0:
+            digit = n % 10
+            total += digit * sign
+            sign *= -1
+            n //= 10
+
+        # If number of digits was even, flip sign
+        return -total if sign == 1 else total
