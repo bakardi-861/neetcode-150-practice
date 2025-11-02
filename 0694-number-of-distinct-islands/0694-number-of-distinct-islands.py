@@ -1,28 +1,27 @@
 class Solution:
     def numDistinctIslands(self, grid: List[List[int]]) -> int:
-        # keep track of island size (distances of each cell to start cell)
-        dirs = [(1,0),(-1,0),(0,1),(0,-1)]
-        rows,cols = len(grid),len(grid[0])
-        visit = set()
-
-        def dfs(r,c,start_r,start_c,island):
-            if min(r,c) < 0 or r >= rows or c >= cols or grid[r][c] != 1:
+        # Do a DFS to find all cells in the current island.
+        def dfs(row, col, direction):
+            if row < 0 or col < 0 or row >= len(grid) or col >= len(grid[0]):
                 return
-            
-            grid[r][c] = 2
-            island.append((r-start_r,c-start_c))
-
-            for dr,dc in dirs:
-                dfs(r+dr,c+dc,start_r,start_c,island)
-            return island
-            
+            if (row, col) in seen or not grid[row][col]:
+                return
+            seen.add((row, col))
+            path_signature.append(direction)
+            dfs(row + 1, col, "D")
+            dfs(row - 1, col, "U")
+            dfs(row, col + 1, "R")
+            dfs(row, col - 1, "L")
+            path_signature.append("0")
         
-        islands = 0
-        for r in range(rows):
-            for c in range(cols):
-                if grid[r][c] == 1:
-                    island = tuple(dfs(r,c,r,c,[]))
-                    if island not in visit:
-                        islands += 1
-                        visit.add(island)
-        return islands
+        # Repeatedly start DFS's as long as there are islands remaining.
+        seen = set()
+        unique_islands = set()
+        for row in range(len(grid)):
+            for col in range(len(grid[0])):
+                path_signature = []
+                dfs(row, col, "0")
+                if path_signature:
+                    unique_islands.add(tuple(path_signature))
+        
+        return len(unique_islands)
