@@ -2,12 +2,12 @@ class Solution:
     def eraseOverlapIntervals(self, intervals: List[List[int]]) -> int:
         # if i would have to merge an interval bc start = start, delete the one I would merge
         # end == start is ok
-        intervals.sort(key=lambda x: x[1])
-        merged = []
+        intervals.sort(key=lambda x: x[1]) # this only seems to work when sorted by end time
+        last = []
         count = 0
         for s,e in intervals:
-            if not merged or merged[-1][1] <= s:
-                merged.append([s,e])
+            if not last or last[1] <= s:
+                last = [s,e]
             else:
                 count += 1
         return count
